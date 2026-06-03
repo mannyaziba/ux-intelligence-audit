@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPSA — UX Intelligence Audit Tool</title>
+  <meta name="description" content="Score any developer-built interface across the five CPSA lenses and get a prioritised fix list. Structure replaces guesswork." />
+
+  <!-- Fonts: IBM Plex Mono (monospace utility) + Geist-like via variable font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ─────────────────────────────────────────────
+       NAVIGATION BAR
+  ───────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="nav-logo">◈</span>
+        <span class="nav-name">CPSA</span>
+      </div>
+      <div class="nav-links">
+        <a href="#audit">Audit</a>
+        <a href="#lenses">Lenses</a>
+        <a href="#docs">Docs</a>
+        <a href="#" class="nav-cta">Request Access</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─────────────────────────────────────────────
+       HERO SECTION
+  ───────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="container">
+
+      <!-- Status badge -->
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>Diagnostic Engine v0.1 — Placeholder Build</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-title">
+        UX Intelligence<br />
+        <span class="hero-title-accent">Audit Tool</span>
+      </h1>
+
+      <!-- Supporting copy -->
+      <p class="hero-sub">
+        Score any developer-built interface across the five CPSA lenses<br class="br-desk" />
+        and get a prioritised fix list.
+      </p>
+
+      <p class="hero-signal">Structure replaces guesswork.</p>
+
+      <!-- Quick stat row -->
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-val">5</span>
+          <span class="stat-label">Diagnostic Lenses</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">100</span>
+          <span class="stat-label">Point Scale</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">CLI</span>
+          <span class="stat-label">Interface First</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       AUDIT DASHBOARD SECTION
+  ───────────────────────────────────────────── -->
+  <section class="audit-section" id="audit">
+    <div class="container">
+
+      <div class="section-label">
+        <span class="section-num">01</span>
+        <span>Run Diagnostic</span>
+      </div>
+
+      <div class="audit-grid">
+
+        <!-- ── LEFT: Input Panel ── -->
+        <div class="panel panel-input">
+
+          <div class="panel-header">
+            <span class="panel-title">Audit Configuration</span>
+            <span class="panel-tag">INPUT</span>
+          </div>
+
+          <div class="panel-body">
+
+            <div class="field-group">
+              <label class="field-label">
+                <span class="field-num">01</span>
+                Product URL
+              </label>
+              <div class="input-wrap">
+                <span class="input-icon">↗</span>
+                <input
+                  id="urlInput"
+                  type="text"
+                  class="field-input"
+                  placeholder="https://yourproduct.com"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span class="field-num">02</span>
+                Interface Type
+              </label>
+              <div class="select-wrap">
+                <select id="typeSelect" class="field-select">
+                  <option>Dashboard</option>
+                  <option>SaaS Platform</option>
+                  <option>Portfolio</option>
+                  <option>Admin Panel</option>
+                  <option>Dev Tool</option>
+                  <option>API Console</option>
+                </select>
+                <span class="select-arrow">⌄</span>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span class="field-num">03</span>
+                Audience Type
+              </label>
+              <div class="select-wrap">
+                <select id="audienceSelect" class="field-select">
+                  <option>Developers</option>
+                  <option>Consumers</option>
+                  <option>Enterprise</option>
+                  <option>Internal Team</option>
+                  <option>Technical PMs</option>
+                </select>
+                <span class="select-arrow">⌄</span>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span class="field-num">04</span>
+                Audit Depth
+              </label>
+              <div class="depth-options">
+                <button class="depth-btn active" data-depth="quick">Quick Scan</button>
+                <button class="depth-btn" data-depth="full">Full Audit</button>
+                <button class="depth-btn" data-depth="deep">Deep Analysis</button>
+              </div>
+            </div>
+
+            <!-- Run button -->
+            <button class="run-btn" id="runBtn">
+              <span class="run-btn-text" id="runBtnText">Run Audit</span>
+              <span class="run-btn-icon" id="runBtnIcon">→</span>
+              <span class="run-btn-loader hidden" id="runBtnLoader"></span>
+            </button>
+
+            <!-- Terminal-style log -->
+            <div class="terminal" id="terminal">
+              <div class="terminal-header">
+                <span class="t-dot r"></span>
+                <span class="t-dot y"></span>
+                <span class="t-dot g"></span>
+                <span class="t-label">audit.log</span>
+              </div>
+              <div class="terminal-body" id="terminalBody">
+                <div class="t-line muted">// Awaiting configuration</div>
+                <div class="t-line muted">// Set URL + interface type + audience</div>
+                <div class="t-line muted">// Press Run Audit to begin</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── RIGHT: Output Panel ── -->
+        <div class="panel panel-output" id="outputPanel">
+
+          <div class="panel-header">
+            <span class="panel-title">Diagnostic Output</span>
+            <span class="panel-tag tag-live" id="outputTag">READY</span>
+          </div>
+
+          <div class="panel-body">
+
+            <!-- Score ring + overall -->
+            <div class="score-block">
+              <div class="score-ring-wrap">
+                <svg class="score-ring" viewBox="0 0 120 120">
+                  <circle class="ring-track" cx="60" cy="60" r="52" />
+                  <circle
+                    class="ring-fill"
+                    id="ringFill"
+                    cx="60" cy="60" r="52"
+                    stroke-dasharray="326.7"
+                    stroke-dashoffset="107.8"
+                  />
+                </svg>
+                <div class="score-center">
+                  <span class="score-num" id="scoreNum">67</span>
+                  <span class="score-denom">/100</span>
+                </div>
+              </div>
+
+              <div class="score-meta">
+                <div class="score-label">Overall Diagnostic Score</div>
+                <div class="score-grade" id="scoreGrade">MODERATE RISK</div>
+                <div class="score-desc muted" id="scoreDesc">
+                  Interface shows structural instability in interaction depth.
+                  Critical feedback loops are absent.
+                </div>
+              </div>
+            </div>
+
+            <!-- CPSA Lens Scores -->
+            <div class="lenses" id="lenses">
+
+              <div class="lens-row" data-lens="structure" data-score="72">
+                <div class="lens-meta">
+                  <span class="lens-name">Structure</span>
+                  <span class="lens-score">72</span>
+                </div>
+                <div class="lens-bar">
+                  <div class="lens-fill" style="width: 72%"></div>
+                </div>
+                <div class="lens-flag flag-warn">Moderate</div>
+              </div>
+
+              <div class="lens-row" data-lens="flow" data-score="58">
+                <div class="lens-meta">
+                  <span class="lens-name">Flow</span>
+                  <span class="lens-score">58</span>
+                </div>
+                <div class="lens-bar">
+                  <div class="lens-fill" style="width: 58%"></div>
+                </div>
+                <div class="lens-flag flag-warn">Fragile</div>
+              </div>
+
+              <div class="lens-row" data-lens="feedback" data-score="43">
+                <div class="lens-meta">
+                  <span class="lens-name">Feedback</span>
+                  <span class="lens-score">43</span>
+                </div>
+                <div class="lens-bar">
+                  <div class="lens-fill" style="width: 43%"></div>
+                </div>
+                <div class="lens-flag flag-crit">Critical</div>
+              </div>
+
+              <div class="lens-row" data-lens="readability" data-score="81">
+                <div class="lens-meta">
+                  <span class="lens-name">Readability</span>
+                  <span class="lens-score">81</span>
+                </div>
+                <div class="lens-bar">
+                  <div class="lens-fill" style="width: 81%"></div>
+                </div>
+                <div class="lens-flag flag-pass">Stable</div>
+              </div>
+
+              <div class="lens-row" data-lens="consistency" data-score="62">
+                <div class="lens-meta">
+                  <span class="lens-name">Consistency</span>
+                  <span class="lens-score">62</span>
+                </div>
+                <div class="lens-bar">
+                  <div class="lens-fill" style="width: 62%"></div>
+                </div>
+                <div class="lens-flag flag-warn">Moderate</div>
+              </div>
+
+            </div>
+
+            <!-- Primary Failure -->
+            <div class="failure-block">
+              <div class="failure-header">
+                <span class="failure-indicator">◈</span>
+                <span class="failure-label">Primary Failure</span>
+              </div>
+              <p class="failure-title">
+                Navigation hierarchy breaks after second interaction layer.
+              </p>
+              <p class="failure-body muted">
+                Users lose directional confidence during task continuation.
+                The system provides no positional anchors once depth exceeds two levels,
+                forcing cognitive reorientation on every navigation event.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       PRIORITISED FIX LIST
+  ───────────────────────────────────────────── -->
+  <section class="fixes-section" id="fixes">
+    <div class="container">
+
+      <div class="section-label">
+        <span class="section-num">02</span>
+        <span>Prioritised Fix List</span>
+      </div>
+
+      <div class="fixes-grid">
+
+        <div class="fix-card fix-p1">
+          <div class="fix-header">
+            <span class="fix-priority">P1</span>
+            <span class="fix-lens-tag">Flow · Feedback</span>
+          </div>
+          <h3 class="fix-title">Unify action hierarchy across dashboard states</h3>
+          <p class="fix-body muted">Primary actions must maintain consistent visual weight regardless of dashboard context. Current variance causes decision latency.</p>
+          <div class="fix-effort">
+            <span class="effort-label">Effort</span>
+            <div class="effort-dots">
+              <span class="dot filled"></span>
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fix-card fix-p1">
+          <div class="fix-header">
+            <span class="fix-priority">P1</span>
+            <span class="fix-lens-tag">Structure · Flow</span>
+          </div>
+          <h3 class="fix-title">Introduce persistent navigation memory</h3>
+          <p class="fix-body muted">Users require breadcrumb or positional context at all depth levels. Absence of navigation memory is the direct cause of the primary failure.</p>
+          <div class="fix-effort">
+            <span class="effort-label">Effort</span>
+            <div class="effort-dots">
+              <span class="dot filled"></span>
+              <span class="dot filled"></span>
+              <span class="dot filled"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fix-card fix-p2">
+          <div class="fix-header">
+            <span class="fix-priority">P2</span>
+            <span class="fix-lens-tag">Consistency</span>
+          </div>
+          <h3 class="fix-title">Standardise spacing rhythm</h3>
+          <p class="fix-body muted">Implement an 8px base grid across all layout components. Current arbitrary spacing creates subconscious visual tension.</p>
+          <div class="fix-effort">
+            <span class="effort-label">Effort</span>
+            <div class="effort-dots">
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fix-card fix-p2">
+          <div class="fix-header">
+            <span class="fix-priority">P2</span>
+            <span class="fix-lens-tag">Feedback</span>
+          </div>
+          <h3 class="fix-title">Clarify hover and active feedback patterns</h3>
+          <p class="fix-body muted">Interactive elements lack system response confirmation. Users cannot distinguish between hover, active, and disabled states reliably.</p>
+          <div class="fix-effort">
+            <span class="effort-label">Effort</span>
+            <div class="effort-dots">
+              <span class="dot filled"></span>
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fix-card fix-p3">
+          <div class="fix-header">
+            <span class="fix-priority">P3</span>
+            <span class="fix-lens-tag">Readability</span>
+          </div>
+          <h3 class="fix-title">Reduce visual competition inside analytics cards</h3>
+          <p class="fix-body muted">Information density inside data cards exceeds optimal cognitive load. Establish clear hierarchy: primary metric, secondary context, tertiary detail.</p>
+          <div class="fix-effort">
+            <span class="effort-label">Effort</span>
+            <div class="effort-dots">
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       CPSA LENSES EXPLAINER
+  ───────────────────────────────────────────── -->
+  <section class="lenses-section" id="lenses">
+    <div class="container">
+
+      <div class="section-label">
+        <span class="section-num">03</span>
+        <span>CPSA Diagnostic Framework</span>
+      </div>
+
+      <div class="lenses-intro muted">
+        Five independent lenses. Each measures a discrete failure mode.<br class="br-desk" />
+        All scores are composited into a single Diagnostic Score (0–100).
+      </div>
+
+      <div class="framework-grid">
+
+        <div class="framework-card">
+          <div class="fw-num">S</div>
+          <h3 class="fw-title">Structure</h3>
+          <p class="fw-body muted">Information architecture, layout hierarchy, grid fidelity, and navigational logic. Evaluates whether users can model the interface mentally.</p>
+        </div>
+
+        <div class="framework-card">
+          <div class="fw-num">F</div>
+          <h3 class="fw-title">Flow</h3>
+          <p class="fw-body muted">Task progression, state transitions, interaction sequencing, and depth navigation. Measures directional clarity across user journeys.</p>
+        </div>
+
+        <div class="framework-card">
+          <div class="fw-num">F</div>
+          <h3 class="fw-title">Feedback</h3>
+          <p class="fw-body muted">System response to user input: hover states, loading indicators, error handling, confirmation signals, and microinteraction quality.</p>
+        </div>
+
+        <div class="framework-card">
+          <div class="fw-num">R</div>
+          <h3 class="fw-title">Readability</h3>
+          <p class="fw-body muted">Typography hierarchy, contrast ratios, information density, scan-path optimisation, and cognitive load management.</p>
+        </div>
+
+        <div class="framework-card">
+          <div class="fw-num">C</div>
+          <h3 class="fw-title">Consistency</h3>
+          <p class="fw-body muted">Component pattern coherence, spacing rhythm, colour system discipline, and inter-state visual logic. Identifies design system drift.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       FOOTER
+  ───────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="nav-logo">◈</span>
+          <span class="footer-name">CPSA — UX Intelligence Audit Tool</span>
+        </div>
+        <div class="footer-meta muted">
+          Placeholder Build · Not Production · v0.1.0
+        </div>
+        <div class="footer-links muted">
+          <a href="#">GitHub</a>
+          <a href="#">Vercel</a>
+          <a href="#">Docs</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+
+</body>
+</html>
